@@ -57,7 +57,7 @@ badges:
     stage: deploy
     tags:
         - docker
-    image :
+    image:
         - python
     script:
         - pip install anybadge
