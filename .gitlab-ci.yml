@@ -55,8 +55,10 @@ pages:
 
 badges:
     stage: deploy
+    tag:
+        - docker
     script:
-        # - pip install anybadge
+        - pip install anybadge
         - ./genereBadges.sh # Script de génération des badges
     dependencies:         # Les badges sont générés à partir des rapports s'ils sont disponibles
         - lint-html
