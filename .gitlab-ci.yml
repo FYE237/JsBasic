@@ -46,7 +46,7 @@ pages:
     stage: deploy
     script:
         - mkdir -p public # Création du répertoire public
-        - cp public_html/js/index.html public/index.html
+        - cp public_html/index.html public/index.html
     artifacts:        # Le rapport sera disponible pour d'autres jobs
         paths:
             - public
@@ -56,7 +56,7 @@ pages:
 badges:
     stage: deploy
     script:
-        - pip install anybadge
+        # - pip install anybadge
         - ./genereBadges.sh # Script de génération des badges
     dependencies:         # Les badges sont générés à partir des rapports s'ils sont disponibles
         - lint-html
