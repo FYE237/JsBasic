@@ -55,8 +55,10 @@ pages:
 
 badges:
     stage: deploy
-    tag:
+    tags:
         - docker
+    image :
+        - python
     script:
         - pip install anybadge
         - ./genereBadges.sh # Script de génération des badges
