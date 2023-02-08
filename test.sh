@@ -1,3 +1,5 @@
+rm linthtml_report.txt;
+
 npx htmlhint *.html -r style-disabled >> linthtml_report.txt;
 
 if grep "no errors" "linthtml_report.txt" ;

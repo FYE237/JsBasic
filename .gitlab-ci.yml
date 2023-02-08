@@ -46,7 +46,7 @@ pages:
     stage: deploy
     script:
         - mkdir -p public # Création du répertoire public
-        - cp ./public_html/js/index.html public/index.html
+        - cp public_html/js/index.html public/index.html
     artifacts:        # Le rapport sera disponible pour d'autres jobs
         paths:
             - public
@@ -56,6 +56,7 @@ pages:
 badges:
     stage: deploy
     script:
+        - pip install anybadge
         - ./genereBadges.sh # Script de génération des badges
     dependencies:         # Les badges sont générés à partir des rapports s'ils sont disponibles
         - lint-html
@@ -63,7 +64,7 @@ badges:
     artifacts:
         paths:
         - linthtml.svg  # Ces fichiers sont générés par le script genereBadges.sh
-        #- badge_lint.svg  # et  mis à disposition pour mise en évidence sur la page du dépôt
+        - lintcss.svg  # et  mis à disposition pour mise en évidence sur la page du dépôt
     when: always          # Et quoiqu'il arrive la génération des badges devra se faire.
                             # Le script de génération de badge doit tenir compte du fait de disposer ou non des rapports 
 # Vos pages sont  : Settings → Pages → Your pages are served here

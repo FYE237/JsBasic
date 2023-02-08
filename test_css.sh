@@ -1,4 +1,6 @@
-node_modules/.bin/csslint Exercice-11.css >> css_report.txt;
+rm "css_report.txt";
+
+node_modules/.bin/csslint *.css >> css_report.txt;
 
 if grep "error" "css_report.txt" ;  
 
