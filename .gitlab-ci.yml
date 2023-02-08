@@ -1,0 +1,61 @@
+stages:
+    - lint
+    - build
+    - deploy
+
+lint-html:
+    stage: lint
+    tags:
+        - docker
+    image: node
+    script: 
+        - npm install htmlhint
+        - ./test.sh
+    artifacts:
+        paths:
+            - linthtml_report.txt
+
+lintcss:
+    stage: lint
+    tags:
+        - docker
+    image: node
+    script:
+        - npm install csslint-cli 
+        - ./test_css.sh
+    artifacts:
+        paths:
+            - css_report.txt
+
+
+minify:
+    stage: build
+    tags:
+        - docker
+    image: node
+    script:
+        - npm install minify
+        - mkdir -p build
+        - for f in *.{html,css,js}; do npx minify "$f" > "build/$f" ; done
+    artifacts:
+        paths:
+        - build
+       
+
+pages: 
+    stage: deploy
+    script:
+        - mkdir -p public # Création du répertoire public
+        - cp Exercice-01.html public/index.html
+        - cp Exercice-02.html public/Exercice2.html
+        - cp Exercice-11.html public/Exercice-11.html
+        - cp Exercice-11.css  public/Exercice-11.css
+        - cp Exercice-11-logo.png public/Exercice-11-logo.png
+        - cp Exercice-11-pub.png public/Exercice-11-pub.png
+    artifacts:
+        paths:
+            - public
+    dependencies:
+        - minify
+
+# Vos pages sont  : Settings → Pages → Your pages are served here
