@@ -46,7 +46,7 @@ pages:
     stage: deploy
     script:
         - mkdir -p public # Création du répertoire public
-        - cp public_html/* public
+        - cp -r public_html/* public
     artifacts:        # Le rapport sera disponible pour d'autres jobs
         paths:
             - public
