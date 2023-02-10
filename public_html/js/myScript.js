@@ -45,8 +45,8 @@ const life = {
     this.saveState();
     for(let i = 0 ; i< size ; i++){
         for(let j = 0 ; j< size ; j++){
-            let v1 = (i-1)%size , /* v2 = (i-2)%size, */ v3 = (i+1)%size;
-            let h1 = (j-1)%size , /* h2 = (j-2)%size, */ h3 = (j+1)%size;
+            let v1 = (i-1)%size , v3 = (i+1)%size;
+            let h1 = (j-1)%size ,  h3 = (j+1)%size;
             let tmp1 = [this.getPreviousState(v1,j),this.getPreviousState(v3,j),this.getPreviousState(v1,h1),
                 this.getPreviousState(i,h1),this.getPreviousState(i,h3),this.getPreviousState(v3,h3),
                 this.getPreviousState(v3,h1),this.getPreviousState(v1,h3)];
