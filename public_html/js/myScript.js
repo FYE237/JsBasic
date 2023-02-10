@@ -18,16 +18,16 @@ const life = {
    },
    
    init: function(){
-    for(i = 0 ; i< size ; i++){
+    for(let i = 0 ; i< size ; i++){
         this.board[i]=[];
-        for(j = 0 ; j< size ; j++)
+        for(let j = 0 ; j< size ; j++)
             this.board[i][j]= new Cell(i,j);
     }
    },
    
    saveState: function(){
-    for(i = 0 ; i< size ; i++){
-        for(j = 0 ; j< size ; j++)
+    for(let i = 0 ; i< size ; i++){
+        for(let j = 0 ; j< size ; j++)
         this.board[i][j].setPreviousState(this.board[i][j].getState()) ;
     }
    },
@@ -43,33 +43,23 @@ const life = {
 
    iterate: function(){
     this.saveState();
-    for(i = 0 ; i< size ; i++){
-        for(j = 0 ; j< size ; j++){
-            let v1 = (i-1)%size , v2 = (i-2)%size, v3 = (i+1)%size;
-            let h1 = (j-1)%size , h2 = (j-2)%size, h3 = (j+1)%size;
-            if(this.getPreviousState(i,j) === 1){
-                    if(this.getPreviousState(v1,j)&&this.getPreviousState(v1,h1)&&this.getPreviousState(i,h1) === 1)
-                        this.board[i][j].live();
-                    else if(this.getPreviousState(v3,j)&&this.getPreviousState(v3,h3)&&this.getPreviousState(i,h3) === 1)
-                        this.board[i][j].live();
-                    else if(this.getPreviousState(v1,j)&&this.getPreviousState(v3,h3)&&this.getPreviousState(i,h3) === 1)
-                        this.board[i][j].live();
-                    else if(this.getPreviousState(v3,j)&&this.getPreviousState(v3,h3)&&this.getPreviousState(i,h1) === 1)
-                        this.board[i][j].live();
-                    else this.board[i][j].die();
-                    
+    for(let i = 0 ; i< size ; i++){
+        for(let j = 0 ; j< size ; j++){
+            let v1 = (i-1)%size , /* v2 = (i-2)%size, */ v3 = (i+1)%size;
+            let h1 = (j-1)%size , /* h2 = (j-2)%size, */ h3 = (j+1)%size;
+            let tmp1 = [this.getPreviousState(v1,j),this.getPreviousState(v3,j),this.getPreviousState(v1,h1),
+                this.getPreviousState(i,h1),this.getPreviousState(i,h3),this.getPreviousState(v3,h3),
+                this.getPreviousState(v3,h1),this.getPreviousState(v1,h3)];
+
+                let tmp3 = tmp1.filter(elt => elt > 0);
+
+            if(this.getPreviousState(i,j) === 1){                
+                    if(tmp3.length > 1) this.board[i][j].live();
+                    else this.board[i][j].die();        
             }
             else if(this.getPreviousState(i,j) === 0){
-                if(this.getPreviousState(v1,j)&&this.getPreviousState(v1,h1)&&this.getPreviousState(i,h1) === 1)
-                        this.board[i][j].die();
-                    else if(this.getPreviousState(v3,j)&&this.getPreviousState(v3,h3)&&this.getPreviousState(i,h3) === 1)
-                        this.board[i][j].die();
-                    else if(this.getPreviousState(v1,j)&&this.getPreviousState(v3,h3)&&this.getPreviousState(i,h3) === 1)
-                        this.board[i][j].die();
-                    else if(this.getPreviousState(v3,j)&&this.getPreviousState(v3,h3)&&this.getPreviousState(i,h1) === 1)
-                        this.board[i][j].live();
+                    if(tmp3.length === 3) this.board[i][j].live();
             }
-            
         }
     }
    }
@@ -145,11 +135,12 @@ function onKeyUp(event){
     }
 }
 
-// function onFrame(){
-//     life.iterate();
-// }
+function onFrame(){
+    life.iterate();
+}
 
 window.addEventListener("keyup",onKeyUp);
+
 
 window.addEventListener("load",
     function(){
@@ -159,7 +150,7 @@ window.addEventListener("load",
         // chargée dans son intégralité
         life.init();
 
-       // paper.view.setOnFrame(onFrame);
+       //paper.view.setOnFrame(onFrame);
         
         /* life.board[5][4].live();
         life.board[5][5].live();

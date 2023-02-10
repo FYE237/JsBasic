@@ -27,16 +27,26 @@ lintcss:                # Vérification de la qualité du code  css
         paths:
             - css_report.txt
 
+lintjs:                # Vérification de la qualité du code  js
+    stage: lint
+    tags:
+        - docker
+    image: node
+    script:
+        - npm init @eslint/config 
+        - ./test_js.sh
+    artifacts:            # Le rapport sera disponible pour d'autres jobs
+        paths:
+            - js_report.txt
 
 minify:
-    stage: build
+    stage: build    #On build les pages
     tags:
         - docker
     image: node
     script:
         - npm install minify
-        - mkdir -p build
-        - for f in *.{html,css,js}; do npx minify "$f" > "build/$f" ; done
+        - ./build.sh
     artifacts:                # Le rapport sera disponible pour d'autres jobs
         paths:
         - build
@@ -46,7 +56,7 @@ pages:
     stage: deploy
     script:
         - mkdir -p public # Création du répertoire public
-        - cp -r public_html/* public
+        - cp -r build/* public/
     artifacts:        # Le rapport sera disponible pour d'autres jobs
         paths:
             - public
@@ -68,6 +78,11 @@ badges:
         paths:
         - linthtml.svg  # Ces fichiers sont générés par le script genereBadges.sh
         - lintcss.svg  # et  mis à disposition pour mise en évidence sur la page du dépôt
+        - lintjs.svg
     when: always          # Et quoiqu'il arrive la génération des badges devra se faire.
                             # Le script de génération de badge doit tenir compte du fait de disposer ou non des rapports 
 # Vos pages sont  : Settings → Pages → Your pages are served here
+
+#Les badges :
+# link : https://gitlab.com/grenoble-inp-ensimag/4MMCAW6/G3/TP2_JS/TP2JS_emmanuel_fezeu_youmbi/-/jobs/artifacts/5d120f734ca318cd9ce88d5292977acbb72c27d4/raw/linthtml_report.txt?job=lint-html
+# Image url : https://gitlab.com/grenoble-inp-ensimag/4MMCAW6/G3/TP2_JS/TP2JS_emmanuel_fezeu_youmbi/-/jobs/artifacts/5d120f734ca318cd9ce88d5292977acbb72c27d4/raw/linthtml.svg?job=badges
