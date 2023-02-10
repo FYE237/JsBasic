@@ -33,7 +33,7 @@ lintjs:                # Vérification de la qualité du code  js
         - docker
     image: node
     script:
-        - npm init @eslint/config 
+        # - npm init @eslint/config 
         - ./test_js.sh
     artifacts:            # Le rapport sera disponible pour d'autres jobs
         paths:

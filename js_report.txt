@@ -1,0 +1,10 @@
+
+/home/fye/ENSIMAG/Semestre2/CAWEB/TP2JS_emmanuel_fezeu_youmbi/public_html/js/myScript.js
+    9:13  error  'paper' is not defined               no-undef
+   13:13  error  'paper' is not defined               no-undef
+   80:23  error  'paper' is not defined               no-undef
+  138:10  error  'onFrame' is defined but never used  no-unused-vars
+  148:9   error  'paper' is not defined               no-undef
+
+✖ 5 problems (5 errors, 0 warnings)
+
