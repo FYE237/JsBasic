@@ -57,6 +57,7 @@ pages:
     script:
         - mkdir -p public # Création du répertoire public
         - cp -r build/* public/
+        - mv public/index.html public/jeu-de-la-vie.html
     artifacts:        # Le rapport sera disponible pour d'autres jobs
         paths:
             - public
